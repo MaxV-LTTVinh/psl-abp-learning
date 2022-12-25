@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  #basketdb: redis
+  redisdb:
+    container_name: redisdb
+    restart: always
+    ports:
+      - "6379:6379"
