@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TeduEcommerce.Domain.Shared\TeduEcommerce.Domain.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Volo.Abp.ObjectExtending" Version="6.0.0" />
     <PackageReference Include="Volo.Abp.Account.Application.Contracts" Version="6.0.0" />
     <PackageReference Include="Volo.Abp.Identity.Application.Contracts" Version="6.0.0" />
@@ -19,6 +15,10 @@
     <PackageReference Include="Volo.Abp.TenantManagement.Application.Contracts" Version="6.0.0" />
     <PackageReference Include="Volo.Abp.FeatureManagement.Application.Contracts" Version="6.0.0" />
     <PackageReference Include="Volo.Abp.SettingManagement.Application.Contracts" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TeduEcommerce.Domain.Shared\TeduEcommerce.Domain.Shared.csproj" />
   </ItemGroup>
 
 </Project>
