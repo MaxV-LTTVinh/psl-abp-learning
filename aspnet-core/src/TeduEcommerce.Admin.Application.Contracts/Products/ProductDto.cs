@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Volo.Abp.Domain.Entities.Auditing;
+using TeduEcommerce.Products;
+using Volo.Abp.Application.Dtos;
 
-namespace TeduEcommerce.Products
+namespace TeduEcommerce.Admin.Products
 {
-    public class Product : AuditedAggregateRoot<Guid>
+    public class ProductDto : IEntityDto<Guid>
     {
+        public Guid Id { get; set; }
         public Guid ManufacturerId { get; set; }
         public string Name { get; set; }
-        public string  Code { get; set; }
+        public string Code { get; set; }
         public string Slug { get; set; }
         public ProductType ProductType { get; set; }
         public string SKU { get; set; }
