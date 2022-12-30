@@ -2,11 +2,19 @@ version: '3.8'
 
 services:
     
-  redisdb: #basketdb
+  abpredisdb: #redisdb
     image: redis:alpine
+
+  mssqldb:
+    image: mcr.microsoft.com/mssql/server:2019-latest
     
 #network section
 networks:
   default:
     name: psl-abp-learning-network
     driver: bridge
+    
+#volumes section
+volumes:
+  sqlserver_data:
+    name: sqlserver_data
