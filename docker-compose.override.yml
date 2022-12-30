@@ -1,21 +1,9 @@
 version: '3.8'
 
 services:
-  #abpredisdb: redis
-  abpredisdb:
-    container_name: abpredisdb
+  #basketdb: redis
+  redisdb:
+    container_name: redisdb
     restart: always
     ports:
       - "6379:6379"
-
-  #mssqldb: sql server
-  mssqldb:
-    container_name: mssqldb
-    environment:
-      SA_PASSWORD: "Admin@123"
-      ACCEPT_EULA: "Y"
-    restart: always
-    volumes:
-      - sqlserver_data:/var/lib/sqlserver/data
-    ports:
-      - "1436:1433"

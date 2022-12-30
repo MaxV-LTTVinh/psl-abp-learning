@@ -48,7 +48,7 @@ public class TeduEcommerceAdminHttpApiHostModule : AbpModule
     {
         var configuration = context.Services.GetConfiguration();
         var hostingEnvironment = context.Services.GetHostingEnvironment();
-        context.Services.AddAutoMapper(typeof(TeduEcommerceAdminApplicationAutoMapperProfile));
+
         ConfigureConventionalControllers();
         ConfigureAuthentication(context, configuration);
         ConfigureLocalization();

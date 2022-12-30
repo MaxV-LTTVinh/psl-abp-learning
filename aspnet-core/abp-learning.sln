@@ -69,13 +69,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeduEcommerce.Admin.HttpApi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{DC8BB66A-2EDE-43A3-8D59-6B9238D03004}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6C157D16-8645-4716-B599-5257B511BB7F}"
-	ProjectSection(SolutionItems) = preProject
-		..\docker-compose.override.yml = ..\docker-compose.override.yml
-		..\docker-compose.yml = ..\docker-compose.yml
-		..\README.md = ..\README.md
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
