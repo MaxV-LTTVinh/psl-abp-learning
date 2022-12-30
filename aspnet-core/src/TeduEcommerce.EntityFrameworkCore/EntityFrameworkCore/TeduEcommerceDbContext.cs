@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TeduEcommerce.IdentitySettings;
 using TeduEcommerce.Inventories;
 using TeduEcommerce.InventoryTickets;
 using TeduEcommerce.Manufacturers;
@@ -84,6 +85,7 @@ public class TeduEcommerceDbContext :
     public DbSet<PromotionManufacturer> PromotionManufacturers { get; set; }
     public DbSet<PromotionProduct> PromotionProducts { get; set; }
     public DbSet<PromotionUsageHistory> PromotionUsageHistories { get; set; }
+    public DbSet<IdentitySetting> IdentitySettings { get; set; }
 
     #endregion
 

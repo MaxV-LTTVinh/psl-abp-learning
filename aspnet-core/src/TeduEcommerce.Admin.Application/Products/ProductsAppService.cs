@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -13,6 +14,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace TeduEcommerce.Admin.Products
 {
+    [Authorize]
     public class ProductsAppService : CrudAppService<
         Product,
         ProductDto,
@@ -24,14 +26,18 @@ namespace TeduEcommerce.Admin.Products
         private readonly ProductManager _productManager;
         private readonly IRepository<ProductCategory> _productCategoryRepository;
         private readonly IBlobContainer<ProductThumbnailPictureContainer> _fileContainer;
+        private readonly ProductCodeGenerator _productCodeGenerator;
         public ProductsAppService(IRepository<Product, Guid> repository,
             IRepository<ProductCategory> productCategoryRepository,
-            ProductManager productManager, IBlobContainer<ProductThumbnailPictureContainer> fileContainer)
+            ProductManager productManager, 
+            IBlobContainer<ProductThumbnailPictureContainer> fileContainer,
+            ProductCodeGenerator productCodeGenerator)
             : base(repository)
         {
             _productManager = productManager;
             _productCategoryRepository = productCategoryRepository;
             _fileContainer = fileContainer;
+            _productCodeGenerator = productCodeGenerator;
         }
 
         public async Task DeleteMultipleAsync(IEnumerable<Guid> ids)
@@ -117,14 +123,6 @@ namespace TeduEcommerce.Admin.Products
             return ObjectMapper.Map<Product, ProductDto>(product);
         }
 
-        private async Task SaveThumbnailImageAsync(string fileName, string base64)
-        {
-            Regex regex = new Regex(@"^[\w/\:.-]+;base64,");
-            base64 = regex.Replace(base64, string.Empty);
-            byte[] bytes = Convert.FromBase64String(base64);
-            await _fileContainer.SaveAsync(fileName, bytes, overrideExisting: true);
-        }
-
         public async Task<string> GetThumbnailImageAsync(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
@@ -140,6 +138,20 @@ namespace TeduEcommerce.Admin.Products
             var result = Convert.ToBase64String(thumbnailContent);
             return result;
         }
+
+        public async Task<string> GetSuggestNewCodeAsync()
+        {
+            return await _productCodeGenerator.GenerateAsync();
+        }
+        #region private 
+        private async Task SaveThumbnailImageAsync(string fileName, string base64)
+        {
+            Regex regex = new Regex(@"^[\w/\:.-]+;base64,");
+            base64 = regex.Replace(base64, string.Empty);
+            byte[] bytes = Convert.FromBase64String(base64);
+            await _fileContainer.SaveAsync(fileName, bytes, overrideExisting: true);
+        }
+        #endregion
 
     }
 }
