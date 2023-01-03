@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TeduEcommerce.Dtos.Admin;
 using TeduEcommerce.Dtos.Admin.Manufacturers;
+using TeduEcommerce.Dtos.Admin.Roles;
 using TeduEcommerce.Manufacturers;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -21,9 +23,11 @@ namespace TeduEcommerce.Admin.Manufacturers
         CreateUpdateManufacturerDto,
         CreateUpdateManufacturerDto>, IManufacturersAppService
     {
-        public ManufacturersAppService(IRepository<Manufacturer, Guid> repository)
+        private readonly IMapper _mapper;
+        public ManufacturersAppService(IRepository<Manufacturer, Guid> repository, IMapper mapper)
             : base(repository)
         {
+            _mapper = mapper;
         }
 
         public async Task DeleteMultipleAsync(IEnumerable<Guid> ids)
@@ -34,23 +38,23 @@ namespace TeduEcommerce.Admin.Manufacturers
 
         public async Task<List<ManufacturerInListDto>> GetListAllAsync()
         {
-            var query = await Repository.GetQueryableAsync();
-            query = query.Where(x=>x.IsActive == true);
+            var query = _mapper.ProjectTo<ManufacturerInListDto>(await Repository.GetQueryableAsync());
+            query = query.Where(x=>x.IsActive);
             var data = await AsyncExecuter.ToListAsync(query);
 
-            return ObjectMapper.Map<List<Manufacturer>, List<ManufacturerInListDto>>(data);
+            return data;
 
         }
 
         public async Task<PagedResultDto<ManufacturerInListDto>> GetListFilterAsync(BaseListFilterDto input)
         {
-            var query = await Repository.GetQueryableAsync();
+            var query = _mapper.ProjectTo<ManufacturerInListDto>(await Repository.GetQueryableAsync());
             query = query.WhereIf(!string.IsNullOrWhiteSpace(input.Keyword), x => x.Name.Contains(input.Keyword));
 
             var totalCount = await AsyncExecuter.LongCountAsync(query);
             var data = await AsyncExecuter.ToListAsync(query.Skip(input.SkipCount).Take(input.MaxResultCount));
 
-            return new PagedResultDto<ManufacturerInListDto>(totalCount,ObjectMapper.Map<List<Manufacturer>,List<ManufacturerInListDto>>(data));
+            return new PagedResultDto<ManufacturerInListDto>(totalCount,data);
         }
     }
 }

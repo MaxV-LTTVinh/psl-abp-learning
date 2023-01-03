@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TeduEcommerce.Dtos.Admin;
 using TeduEcommerce.Dtos.Admin.ProductAttributes;
+using TeduEcommerce.Dtos.Admin.Roles;
 using TeduEcommerce.ProductAttributes;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -21,9 +23,11 @@ namespace TeduEcommerce.Admin.ProductAttributes
         CreateUpdateProductAttributeDto,
         CreateUpdateProductAttributeDto>, IProductAttributesAppService
     {
-        public ProductAttributesAppService(IRepository<ProductAttribute, Guid> repository)
+        private readonly IMapper _mapper;
+        public ProductAttributesAppService(IRepository<ProductAttribute, Guid> repository, IMapper mapper)
             : base(repository)
         {
+            _mapper = mapper;
         }
 
         public async Task DeleteMultipleAsync(IEnumerable<Guid> ids)
@@ -34,23 +38,23 @@ namespace TeduEcommerce.Admin.ProductAttributes
 
         public async Task<List<ProductAttributeInListDto>> GetListAllAsync()
         {
-            var query = await Repository.GetQueryableAsync();
+            var query = _mapper.ProjectTo<ProductAttributeInListDto>(await Repository.GetQueryableAsync());
             query = query.Where(x => x.IsActive);
             var data = await AsyncExecuter.ToListAsync(query);
 
-            return ObjectMapper.Map<List<ProductAttribute>, List<ProductAttributeInListDto>>(data);
+            return data;
 
         }
 
         public async Task<PagedResultDto<ProductAttributeInListDto>> GetListFilterAsync(BaseListFilterDto input)
         {
-            var query = await Repository.GetQueryableAsync();
+            var query = _mapper.ProjectTo<ProductAttributeInListDto>(await Repository.GetQueryableAsync());
             query = query.WhereIf(!string.IsNullOrWhiteSpace(input.Keyword), x => x.Label.Contains(input.Keyword));
 
             var totalCount = await AsyncExecuter.LongCountAsync(query);
             var data = await AsyncExecuter.ToListAsync(query.Skip(input.SkipCount).Take(input.MaxResultCount));
 
-            return new PagedResultDto<ProductAttributeInListDto>(totalCount, ObjectMapper.Map<List<ProductAttribute>, List<ProductAttributeInListDto>>(data));
+            return new PagedResultDto<ProductAttributeInListDto>(totalCount, data);
         }
     }
 }

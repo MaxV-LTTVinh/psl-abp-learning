@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeduEcommerce.Dtos.Admin;
+using TeduEcommerce.Dtos.Admin.ProductCategories;
 using TeduEcommerce.Dtos.Admin.Roles;
 using TeduEcommerce.Roles;
 using Volo.Abp;
@@ -32,18 +34,21 @@ namespace TeduEcommerce.Admin.Roles
         protected IPermissionManager PermissionManager { get; }
         protected IPermissionDefinitionManager PermissionDefinitionManager { get; }
         protected ISimpleStateCheckerManager<PermissionDefinition> SimpleStateCheckerManager { get; }
+        private readonly IMapper _mapper;
 
         public RolesAppService(IRepository<IdentityRole, Guid> repository,
             IPermissionManager permissionManager,
         IPermissionDefinitionManager permissionDefinitionManager,
         IOptions<PermissionManagementOptions> options,
-        ISimpleStateCheckerManager<PermissionDefinition> simpleStateCheckerManager)
+        ISimpleStateCheckerManager<PermissionDefinition> simpleStateCheckerManager,
+        IMapper mapper)
             : base(repository)
         {
             Options = options.Value;
             PermissionManager = permissionManager;
             PermissionDefinitionManager = permissionDefinitionManager;
             SimpleStateCheckerManager = simpleStateCheckerManager;
+            _mapper = mapper;
         }
 
         public async Task DeleteMultipleAsync(IEnumerable<Guid> ids)
@@ -54,22 +59,22 @@ namespace TeduEcommerce.Admin.Roles
 
         public async Task<List<RoleInListDto>> GetListAllAsync()
         {
-            var query = await Repository.GetQueryableAsync();
+            var query = _mapper.ProjectTo<RoleInListDto>(await Repository.GetQueryableAsync());
             var data = await AsyncExecuter.ToListAsync(query);
 
-            return ObjectMapper.Map<List<IdentityRole>, List<RoleInListDto>>(data);
+            return data;
 
         }
 
         public async Task<PagedResultDto<RoleInListDto>> GetListFilterAsync(BaseListFilterDto input)
         {
-            var query = await Repository.GetQueryableAsync();
+            var query = _mapper.ProjectTo<RoleInListDto>(await Repository.GetQueryableAsync());
             query = query.WhereIf(!string.IsNullOrWhiteSpace(input.Keyword), x => x.Name.Contains(input.Keyword));
 
             var totalCount = await AsyncExecuter.LongCountAsync(query);
             var data = await AsyncExecuter.ToListAsync(query.Skip(input.SkipCount).Take(input.MaxResultCount));
 
-            return new PagedResultDto<RoleInListDto>(totalCount, ObjectMapper.Map<List<IdentityRole>, List<RoleInListDto>>(data));
+            return new PagedResultDto<RoleInListDto>(totalCount, data);
         }
 
         public async override Task<RoleDto> CreateAsync(CreateUpdateRoleDto input)

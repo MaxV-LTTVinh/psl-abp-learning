@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using TeduEcommerce.Products;
@@ -21,5 +22,7 @@ namespace TeduEcommerce.Dtos.Admin.Products
         public string ThumbnailPicture { get; set; }
         public string CategoryName { get; set; }
         public string CategorySlug { get; set; }
+        [JsonIgnore]
+        public string CreationTime { get; set; }
     }
 }
