@@ -4,7 +4,7 @@ using System.Text;
 using TeduEcommerce.ProductAttributes;
 using Volo.Abp.Application.Dtos;
 
-namespace TeduEcommerce.Admin.Products.Attributes
+namespace TeduEcommerce.Dtos.Admin.Products.Attributes
 {
     public class ProductAttributeValueDto : IEntityDto<Guid>
     {

@@ -31,6 +31,7 @@ using Volo.Abp.VirtualFileSystem;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using Autofac.Core;
 
 namespace TeduEcommerce.Admin;
 
@@ -52,6 +53,7 @@ public class TeduEcommerceAdminHttpApiHostModule : AbpModule
         var configuration = context.Services.GetConfiguration();
         var hostingEnvironment = context.Services.GetHostingEnvironment();
 
+        context.Services.AddAutoMapper(typeof(TeduEcommerceAdminApplicationAutoMapperProfile));
         ConfigureConventionalControllers();
         ConfigureAuthentication(context, configuration);
         ConfigureLocalization();

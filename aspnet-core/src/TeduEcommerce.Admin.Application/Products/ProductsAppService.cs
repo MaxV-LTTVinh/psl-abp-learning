@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using TeduEcommerce.Admin.Products.Attributes;
+using TeduEcommerce.Dtos.Admin.Products.Attributes;
+using TeduEcommerce.Dtos.Admin.Products;
 using TeduEcommerce.ProductAttributes;
 using TeduEcommerce.ProductCategories;
 using TeduEcommerce.Products;
@@ -93,8 +94,7 @@ namespace TeduEcommerce.Admin.Products
         }
         public override async Task<ProductDto> CreateAsync(CreateUpdateProductDto input)
         {
-            var product = await _productManager.CreateAsync(input.ManufacturerId, input.Name, input.Code, input.Slug, input.ProductType, input.SKU,
-                input.SortOrder, input.Visibility, input.IsActive, input.CategoryId, input.SeoMetaDescription, input.Description, input.SellPrice);
+            var product = await _productManager.CreateAsync(input);
 
             if (input.ThumbnailPictureContent != null && input.ThumbnailPictureContent.Length > 0)
             {

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TeduEcommerce.Dtos.Admin;
+using TeduEcommerce.Dtos.Admin.Manufacturers;
 using TeduEcommerce.Manufacturers;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;

@@ -3,17 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeduEcommerce.Admin.ProductCategories
+namespace TeduEcommerce.Dtos.Admin.Manufacturers
 {
-    public class CreateUpdateProductCategoryDtoValidator : AbstractValidator<CreateUpdateProductCategoryDto>
+    public class CreateUpdateManufacturerDtoValidator : AbstractValidator<CreateUpdateManufacturerDto>
     {
-        public CreateUpdateProductCategoryDtoValidator()
+        public CreateUpdateManufacturerDtoValidator()
         {
             RuleFor(x => x.Name).NotEmpty().MaximumLength(50);
             RuleFor(x => x.Code).NotEmpty().MaximumLength(50);
             RuleFor(x => x.Slug).NotEmpty().MaximumLength(50);
             RuleFor(x => x.CoverPicture).MaximumLength(250);
-            RuleFor(x => x.SeoMetaDescription).MaximumLength(250);
         }
     }
 }

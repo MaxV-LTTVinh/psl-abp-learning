@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeduEcommerce.Admin.Products.Attributes
+namespace TeduEcommerce.Dtos.Admin.Products.Attributes
 {
     public class AddUpdateProductAttributeDto
     {

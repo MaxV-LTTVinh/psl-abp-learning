@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TeduEcommerce.ProductAttributes;
 
-namespace TeduEcommerce.Admin.ProductAttributes
+namespace TeduEcommerce.Dtos.Admin.ProductAttributes
 {
     public class CreateUpdateProductAttributeDto
     {

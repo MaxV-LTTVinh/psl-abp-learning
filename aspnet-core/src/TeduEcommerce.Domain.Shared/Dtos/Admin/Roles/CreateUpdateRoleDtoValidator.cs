@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeduEcommerce.Admin.Roles
+namespace TeduEcommerce.Dtos.Admin.Roles
 {
     public class CreateUpdateRoleDtoValidator : AbstractValidator<CreateUpdateRoleDto>
     {

@@ -4,9 +4,9 @@ using System.Text;
 using TeduEcommerce.ProductAttributes;
 using Volo.Abp.Application.Dtos;
 
-namespace TeduEcommerce.Admin.ProductAttributes
+namespace TeduEcommerce.Dtos.Admin.ProductAttributes
 {
-    public class ProductAttributeDto : IEntityDto<Guid>
+    public class ProductAttributeInListDto : EntityDto<Guid>
     {
         public string Code { get; set; }
         public AttributeType DataType { get; set; }
@@ -16,7 +16,6 @@ namespace TeduEcommerce.Admin.ProductAttributes
         public bool IsActive { get; set; }
         public bool IsRequired { get; set; }
         public bool IsUnique { get; set; }
-        public string Note { get; set; }
         public Guid Id { get; set; }
     }
 }

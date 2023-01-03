@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Volo.Abp.Application.Dtos;
 
-namespace TeduEcommerce.Admin
+namespace TeduEcommerce.Dtos.Admin
 {
     public class BaseListFilterDto : PagedResultRequestDto
     {

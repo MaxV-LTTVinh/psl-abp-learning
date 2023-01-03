@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeduEcommerce.Admin.ProductAttributes
+namespace TeduEcommerce.Dtos.Admin.ProductAttributes
 {
     public class CreateUpdateProductAttributeDtoValidator : AbstractValidator<CreateUpdateProductAttributeDto>
     {

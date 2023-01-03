@@ -10,6 +10,10 @@ namespace TeduEcommerce.Products
     public class Product : AuditedAggregateRoot<Guid>
     {
         public Product() { }
+        public Product(Guid id)
+        {
+            Id = id;
+        }
         public Product(Guid id, Guid manufacturerId,
             string name, string code, string slug,
             ProductType productType, string sKU,
@@ -39,7 +43,7 @@ namespace TeduEcommerce.Products
         }
         public Guid ManufacturerId { get; set; }
         public string Name { get; set; }
-        public string  Code { get; set; }
+        public string Code { get; set; }
         public string Slug { get; set; }
         public ProductType ProductType { get; set; }
         public string SKU { get; set; }

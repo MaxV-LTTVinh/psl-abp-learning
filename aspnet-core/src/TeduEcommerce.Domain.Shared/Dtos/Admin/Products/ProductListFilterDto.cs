@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TeduEcommerce.Dtos.Admin;
 
-namespace TeduEcommerce.Admin.Products
+namespace TeduEcommerce.Dtos.Admin.Products
 {
     public class ProductListFilterDto : BaseListFilterDto
     {
